@@ -1,0 +1,52 @@
+data:
+  image: busybox:latest
+  volumes:
+    - /data
+    - /var/lib/postgresql/data
+    - /var/lib/sentry/files
+  command: /bin/echo
+
+redis:
+  restart: always
+  image: redis
+
+postgres:
+  restart: always
+  image: postgres:9.4
+  ports:
+   - 10000:5432
+  volumes_from:
+    - data
+
+sentry:
+  restart: always
+  image: hashlabs/sentry:latest
+  links:
+   - redis
+   - postgres
+  ports:
+   - 9000:9000
+  volumes_from:
+    - data
+  environment:
+    - SENTRY_SECRET_KEY=hashlabs-change-me
+
+sentry_celery_beat:
+  restart: always
+  image: hashlabs/sentry:latest
+  links:
+   - redis
+   - postgres
+  environment:
+    - SENTRY_SECRET_KEY=hashlabs-change-me
+  command: "sentry celery beat"
+
+sentry_celery_worker:
+  restart: always
+  image: hashlabs/sentry:latest
+  links:
+   - redis
+   - postgres
+  environment:
+    - SENTRY_SECRET_KEY=hashlabs-change-me
+  command: "sentry celery worker"
