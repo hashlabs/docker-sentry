@@ -1,3 +1,2 @@
-FROM sentry:8.10-onbuild
-ADD requirements.txt /
+FROM sentry:8.11-onbuild
 RUN echo "SENTRY_FEATURES['auth:register'] = False" >> /etc/sentry/sentry.conf.py

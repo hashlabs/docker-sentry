@@ -1,6 +1,6 @@
 # Docker Sentry
 
-This is pretty much the same image as the official [Sentry](https://hub.docker.com/_/sentry/) Docker image. But it has a few plugins installed that we need.
+This is pretty much the same image as the official [Sentry](https://hub.docker.com/_/sentry/) Docker image. But it has some tweaks in the configuration to disable registration.
 
 ## Installation
 
@@ -11,10 +11,6 @@ Follow instructions at [https://hub.docker.com/\_/sentry/](https://hub.docker.co
 1. `docker-compose up`
 1. `docker-compose run sentry upgrade`
 1. go to [http://localhost:9000](http://localhost:9000)
-
-## Plugins
-
-* [sentry-slack](https://github.com/getsentry/sentry-slack)
 
 ## About Hash Labs
 
